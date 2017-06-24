@@ -48,6 +48,24 @@ app.get('/todos/:id',function (req,res) {
         })
     }
 })
+
+app.delete('/todos/:id',function (req,res) {
+    var id = req.params.id
+    if(!ObjectId.isValid(id))
+    {
+     return res.status(404).send()
+    }
+    else
+    {
+        Todo.findByIdAndRemove(id).then(function (todo)
+        {
+           res.send(todo)
+        }).catch(function (err) {
+            res.status(404).send()
+        })
+    }
+
+})
 app.listen(3000,function () {
     console.log("Server up on 3000")
 })
